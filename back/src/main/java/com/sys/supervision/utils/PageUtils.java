@@ -1,0 +1,20 @@
+package com.sys.supervision.utils;
+
+
+import com.sys.supervision.config.Constant;
+import com.sys.supervision.model.PageTair;
+
+public class PageUtils {
+
+    public static PageTair transferTo(Integer pageNo, Integer pageSize) {
+        if (Constant.NO_PAGE_SIGN.equals(pageSize)) return PageTair.builder().startRow(-1).endRow(-1).build();
+
+        if (pageNo == null || pageNo < 1 || pageSize == null || pageSize < 1) {
+            throw new RuntimeException("分页参数有误");
+        }
+
+        int start = (pageNo - 1) * pageSize;
+        return new PageTair(start, pageSize);
+    }
+
+}
