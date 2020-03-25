@@ -71,11 +71,11 @@ public class AccessCheckAspect {
             if (account == null) account = accountMapper.selectByToken(token);
             if (account == null) return BaseListResponse.error(RE_LOGIN, AccessTimeOutMessage);
             if (!AccountStatus.Normal.getCode().equals(account.getStatus())) {
-                BaseListResponse.error(AccountExceptionMessage);
+                return BaseListResponse.error(AccountExceptionMessage);
             }
             if (authLevel != null) {
-                if (!RoleEnum.check(account.getRole())) BaseListResponse.error(AuthErrorMessage);
-                if (!RoleEnum.check(account.getRole(), authLevel.value())) BaseListResponse.error(AuthErrorMessage);
+                if (!RoleEnum.check(account.getRole())) return BaseListResponse.error(AuthErrorMessage);
+                if (RoleEnum.check(account.getRole(), authLevel.value())) return BaseListResponse.error(AuthErrorMessage);
             }
             AccountHelper.put(account);
         }

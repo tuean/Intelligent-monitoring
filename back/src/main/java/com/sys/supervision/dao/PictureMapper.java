@@ -2,6 +2,8 @@ package com.sys.supervision.dao;
 
 import com.sys.supervision.entity.db.Picture;
 
+import java.util.List;
+
 public interface PictureMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface PictureMapper {
     int updateByPrimaryKeySelective(Picture record);
 
     int updateByPrimaryKey(Picture record);
+
+    List<Picture> selectByEquipId(Integer equipId);
 }

@@ -41,7 +41,7 @@ public enum RoleEnum {
     public static boolean check(Integer code, RoleEnum[] roleEnums) {
         if (code == null || roleEnums == null) return false;
         for (RoleEnum r : roleEnums) {
-            if (code.equals(r.getCode())) {
+            if (code > r.getCode()) {
                 return true;
             }
         }
