@@ -1,0 +1,7 @@
+[2020-03-25 22:47:06] [INFO ] [com.sys.supervision.SupervisionApplicationTests:55] -- Starting SupervisionApplicationTests on MacBook-Pro-of-tuean.local with PID 42091 (started by tuean in /Users/tuean/own/supervision/back)
+[2020-03-25 22:47:06] [INFO ] [com.sys.supervision.SupervisionApplicationTests:651] -- No active profile set, falling back to default profiles: default
+[2020-03-25 22:47:08] [INFO ] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor:181] -- Initializing ExecutorService 'applicationTaskExecutor'
+[2020-03-25 22:47:09] [INFO ] [org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler:181] -- Initializing ExecutorService 'taskScheduler'
+[2020-03-25 22:47:09] [INFO ] [com.sys.supervision.SupervisionApplicationTests:61] -- Started SupervisionApplicationTests in 8.387 seconds (JVM running for 9.775)
+[2020-03-25 22:47:09] [INFO ] [org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler:218] -- Shutting down ExecutorService 'taskScheduler'
+[2020-03-25 22:47:09] [INFO ] [org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor:218] -- Shutting down ExecutorService 'applicationTaskExecutor'

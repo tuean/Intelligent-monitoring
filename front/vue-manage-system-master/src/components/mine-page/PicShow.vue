@@ -14,16 +14,20 @@
                 <el-cascader v-model="value" :options="options" @change="handleChange"></el-cascader>
 
                 <div class="photo-container">
-                    <el-row :gutter="20" >
-                    <el-col :span="6" v-for="x in srcMap" :key="x.id">
-                        <div class="demo-image__placeholder">
-                            <div class="block img-container">
-                                <el-image :src="x.src"></el-image>
-                                <span class="demonstration">{{x.des}}</span>
+                    <el-row :gutter="20">
+                        <el-col :span="6" v-for="x in srcMap" :key="x.id">
+                            <div class="demo-image__placeholder">
+                                <div class="block img-container">
+                                    <el-image :src="x.path">
+                                        <div slot="error" class="image-slot">
+                                            <i class="el-icon-picture-outline"></i>
+                                        </div>
+                                    </el-image>
+                                    <span class="demonstration" v-if="x.createAt != null">拍摄时间：{{ x.createAt }}</span>
+                                </div>
                             </div>
-                        </div>
-                    </el-col>
-                </el-row>
+                        </el-col>
+                    </el-row>
                 </div>
             </div>
         </div>
@@ -41,14 +45,7 @@ export default {
             value: null,
             options: [],
             src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-            srcMap: [{
-                id: 1,
-                src: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
-                des: "moren"
-            },{
-                id: 2,
-                src: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
-            }]
+            srcMap: []
         };
     },
     created() {
@@ -66,7 +63,23 @@ export default {
     },
     methods: {
         handleChange(value) {
-            console.log(value);
+            // console.log(value);
+            if (value.length < 3) {
+                this.$message.warning('系统异常');
+            }
+            let data = {
+                id: value[2]
+            };
+            post('/pic/list', data)
+                .then(res => {
+                    this.srcMap = res.body;
+                    if (this.srcMap == null || this.srcMap.length < 1) {
+                        this.$message.warning('当前设备下没有照片');
+                    }
+                })
+                .catch(err => {
+                    this.$message.error('获取图片失败');
+                });
         }
     }
 };
@@ -78,7 +91,7 @@ export default {
 }
 
 .img-container {
-    text-align: center; 
+    text-align: center;
 }
 
 .demonstration {
