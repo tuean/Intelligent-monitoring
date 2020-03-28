@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from './mUtils';
+import { getToken, clearLocalStorage } from './mUtils';
 
 const service = axios.create({
     // process.env.NODE_ENV === 'development' 来判断是否开发环境
@@ -21,9 +21,16 @@ service.interceptors.request.use(
 );
 
 service.interceptors.response.use(
+    
     response => {
         if (response.status === 200) {
-            return response;
+            if (response.data != null && response.data.code === 999) {
+                clearLocalStorage();
+                window.location.href = '/'
+            } else {
+                return response;
+            }
+            
         } else {
             Promise.reject();
         }

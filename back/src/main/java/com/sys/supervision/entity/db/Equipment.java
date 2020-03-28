@@ -21,6 +21,14 @@ public class Equipment {
 
     private String modifier;
 
+    private String devCode;
+
+    private String devName;
+
+    private String longitude;
+
+    private String latitude;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +99,37 @@ public class Equipment {
 
     public void setModifier(String modifier) {
         this.modifier = modifier == null ? null : modifier.trim();
+    }
+
+    public String getDevCode() {
+        return devCode;
+    }
+
+    public void setDevCode(String devCode) {
+        this.devCode = devCode == null ? null : devCode.trim();
+    }
+
+    public String getDevName() {
+        return devName;
+    }
+
+    public void setDevName(String devName) {
+        this.devName = devName == null ? null : devName.trim();
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
     }
 }

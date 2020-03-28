@@ -145,6 +145,7 @@ export default {
     height: 500px;
 }
 .schart-box {
+    width: 100%;
     display: inline-block;
     margin-top: 20px;
 }

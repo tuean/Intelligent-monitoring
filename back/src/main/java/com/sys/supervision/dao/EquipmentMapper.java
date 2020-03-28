@@ -2,7 +2,6 @@ package com.sys.supervision.dao;
 
 import com.sys.supervision.entity.db.Equipment;
 import com.sys.supervision.model.enhance.EquipGroupByProject;
-import com.sys.supervision.model.enhance.EquipmentEnhance;
 import com.sys.supervision.model.request.EquipmentListRequest;
 import com.sys.supervision.model.response.EquipmentListResponse;
 
@@ -20,6 +19,7 @@ public interface EquipmentMapper {
     int updateByPrimaryKeySelective(Equipment record);
 
     int updateByPrimaryKey(Equipment record);
+
 
     List<Equipment> getAll();
 

@@ -11,10 +11,14 @@
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
     <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="dev_code" property="devCode" jdbcType="VARCHAR" />
+    <result column="dev_name" property="devName" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, equipment_status, project_id, period, parameter, create_at, creater, modify_at, 
-    modifier
+    modifier, dev_code, dev_name, longitude, latitude
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,12 +33,14 @@
   <insert id="insert" parameterType="com.sys.supervision.entity.db.Equipment" >
     insert into tb_equipment (id, equipment_status, project_id, 
       period, parameter, create_at, 
-      creater, modify_at, modifier
-      )
+      creater, modify_at, modifier, 
+      dev_code, dev_name, longitude, 
+      latitude)
     values (#{id,jdbcType=INTEGER}, #{equipmentStatus,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, 
       #{period,jdbcType=VARCHAR}, #{parameter,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{creater,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}
-      )
+      #{creater,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{devCode,jdbcType=VARCHAR}, #{devName,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sys.supervision.entity.db.Equipment" >
     insert into tb_equipment
@@ -66,6 +72,18 @@
       <if test="modifier != null" >
         modifier,
       </if>
+      <if test="devCode != null" >
+        dev_code,
+      </if>
+      <if test="devName != null" >
+        dev_name,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -94,6 +112,18 @@
       </if>
       <if test="modifier != null" >
         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="devCode != null" >
+        #{devCode,jdbcType=VARCHAR},
+      </if>
+      <if test="devName != null" >
+        #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -124,6 +154,18 @@
       <if test="modifier != null" >
         modifier = #{modifier,jdbcType=VARCHAR},
       </if>
+      <if test="devCode != null" >
+        dev_code = #{devCode,jdbcType=VARCHAR},
+      </if>
+      <if test="devName != null" >
+        dev_name = #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -136,7 +178,11 @@
       create_at = #{createAt,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       modify_at = #{modifyAt,jdbcType=TIMESTAMP},
-      modifier = #{modifier,jdbcType=VARCHAR}
+      modifier = #{modifier,jdbcType=VARCHAR},
+      dev_code = #{devCode,jdbcType=VARCHAR},
+      dev_name = #{devName,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
@@ -157,14 +203,14 @@
 
   <select id="query" resultType="com.sys.supervision.model.response.EquipmentListResponse">
     select
-      te.id as id,
-      tp.name as name,
-      tp.longitude as longitude,
-      tp.latitude as latitude,
-      te.equipment_status as equipmentStatus,
-      te.period as period,
-      te.parameter as parameter,
-      te.create_at as createAt
+    te.id as id,
+    tp.name as name,
+    tp.longitude as longitude,
+    tp.latitude as latitude,
+    te.equipment_status as equipmentStatus,
+    te.period as period,
+    te.parameter as parameter,
+    te.create_at as createAt
     from tb_equipment te
     left join tb_project tp
     on te.project_id = tp.id
@@ -191,5 +237,7 @@
       and tp.name like concat('%', concat(#{name}, '%'))
     </if>
   </sql>
+
+
 
 </mapper>

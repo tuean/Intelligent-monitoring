@@ -26,12 +26,6 @@ create table `tb_account`(
 )Engine=InnoDB comment '账号表';
 
 
--- 创建管理员账号
-INSERT INTO `tb_account` (`id`,`account`,`pwd`,`role`,`token`, `token_expire`, `create_at`,`creater`,`modify_at`,`modifier`,`name`,`status`)
-VALUES
-(0,'admin','cbc9652ebcb81445b6c55ddf2ca89e97', 0,NULL, now(), now(),'auto', now(),'auto', 'admin', 0);
-
-
 -- 创建图像数据表
 create table `tb_pic` (
   `id` int(10) unsigned not null auto_increment comment 'id',
@@ -84,15 +78,6 @@ create table `tb_equipment` (
   `modifier` varchar(64) not null comment '修改人账号',
   primary key(`id`)
 )Engine=InnoDB comment '设备表';
-
-
-
--- 测试项目
-INSERT INTO `supervision`.`tb_project` (`name`, `equipment_numnber`, `city`, `longitude`, `latitude`, `project_status`, `create_at`, `creater`, `modify_at`, `modifier`) VALUES ('测试项目', '2', '上海', '121.48', '31.22  ', '2', now(), 'auto', now(), 'auto');
-
--- 测试项目对应两个设备 注意project_id需要修改为上述新增完的id
-INSERT INTO `supervision`.`tb_equipment` (`equipment_status`, `project_id`, `period`, `parameter`, `create_at`, `creater`, `modify_at`, `modifier`) VALUES ('0', '1', '2', '{}', now(), 'auto', now(), 'auto');
-INSERT INTO `supervision`.`tb_equipment` (`equipment_status`, `project_id`, `period`, `parameter`, `create_at`, `creater`, `modify_at`, `modifier`) VALUES ('0', '1', '2', '{}', now(), 'auto', now(), 'auto');
 
 
 
