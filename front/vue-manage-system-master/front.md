@@ -6,6 +6,11 @@
 
 原有的页面demo中并没有去除，如有需要可在SideBar.vue中去除即可
 
+#### 视频播放
+由于采用flv格式，使用flv.js作为播放器进行flv格式播放
+
+代码参考开源项目：https://github.com/fuyi501/web-video-live
+
 ####  目录说明
 
 - api：接口的封装，笔者没有使用
