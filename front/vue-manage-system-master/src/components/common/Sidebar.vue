@@ -77,6 +77,11 @@ export default {
                     title: '抓拍信息'
                 },
                 {
+                    icon: 'el-icon-camera',
+                    index: 'liveShow',
+                    title: '直播信息'
+                },
+                {
                     icon: 'el-icon-lx-home',
                     index: 'dashboard',
                     title: '系统首页'

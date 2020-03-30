@@ -35,6 +35,11 @@ export default new Router({
                     meta: { title: '抓拍信息' }
                 },
                 {
+                    path: '/liveShow',
+                    component: () => import('../components/mine-page/LiveShow'),
+                    meta: { title: '直播信息' }
+                },
+                {
                     path: '/dashboard',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
                     meta: { title: '系统首页' }
