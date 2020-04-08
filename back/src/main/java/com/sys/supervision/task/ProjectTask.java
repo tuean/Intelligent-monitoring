@@ -20,6 +20,7 @@ public class ProjectTask {
 
     // 1000ms * 60 * 5 = 5分钟一次
     @Scheduled(initialDelay = 1000, fixedDelay = 1000 * 60 * 60 * 5)
+//    @Scheduled(cron = "0 0/1 * 1/1 * ? *")
     public void run() {
         rpcService.getDevInfo();
     }

@@ -1,6 +1,7 @@
 package com.sys.supervision.dao;
 
 import com.sys.supervision.entity.db.Project;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface ProjectMapper {
     int updateByPrimaryKey(Project record);
 
     List<Project> getAll();
+
+    int countByUnitId(String unitId);
+
+    void updateNumberByProjectCode(@Param("projectId") Integer projectId,
+                                   @Param("count") Integer count);
 }

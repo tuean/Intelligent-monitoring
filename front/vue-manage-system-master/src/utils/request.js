@@ -8,7 +8,8 @@ const service = axios.create({
     timeout: 5000
 });
 
-service.defaults.baseURL = 'http://47.103.61.148:7777';
+// service.defaults.baseURL = 'http://47.103.61.148:7777';
+service.defaults.baseURL = 'http://localhost:7777';
 
 service.interceptors.request.use(
     config => {

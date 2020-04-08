@@ -7,11 +7,19 @@ public class Equipment {
 
     private Integer equipmentStatus;
 
-    private Integer projectId;
+    private String devCode;
+
+    private String devName;
+
+    private String projectId;
 
     private String period;
 
     private String parameter;
+
+    private String longitude;
+
+    private String latitude;
 
     private Date createAt;
 
@@ -20,14 +28,6 @@ public class Equipment {
     private Date modifyAt;
 
     private String modifier;
-
-    private String devCode;
-
-    private String devName;
-
-    private String longitude;
-
-    private String latitude;
 
     public Integer getId() {
         return id;
@@ -45,12 +45,28 @@ public class Equipment {
         this.equipmentStatus = equipmentStatus;
     }
 
-    public Integer getProjectId() {
+    public String getDevCode() {
+        return devCode;
+    }
+
+    public void setDevCode(String devCode) {
+        this.devCode = devCode == null ? null : devCode.trim();
+    }
+
+    public String getDevName() {
+        return devName;
+    }
+
+    public void setDevName(String devName) {
+        this.devName = devName == null ? null : devName.trim();
+    }
+
+    public String getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
+    public void setProjectId(String projectId) {
+        this.projectId = projectId == null ? null : projectId.trim();
     }
 
     public String getPeriod() {
@@ -67,6 +83,22 @@ public class Equipment {
 
     public void setParameter(String parameter) {
         this.parameter = parameter == null ? null : parameter.trim();
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude == null ? null : longitude.trim();
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude == null ? null : latitude.trim();
     }
 
     public Date getCreateAt() {
@@ -99,37 +131,5 @@ public class Equipment {
 
     public void setModifier(String modifier) {
         this.modifier = modifier == null ? null : modifier.trim();
-    }
-
-    public String getDevCode() {
-        return devCode;
-    }
-
-    public void setDevCode(String devCode) {
-        this.devCode = devCode == null ? null : devCode.trim();
-    }
-
-    public String getDevName() {
-        return devName;
-    }
-
-    public void setDevName(String devName) {
-        this.devName = devName == null ? null : devName.trim();
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude == null ? null : longitude.trim();
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude == null ? null : latitude.trim();
     }
 }

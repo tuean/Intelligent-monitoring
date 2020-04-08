@@ -13,10 +13,11 @@
     <result column="creater" property="creater" jdbcType="VARCHAR" />
     <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
     <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, equipment_numnber, city, longitude, latitude, project_status, create_at, 
-    creater, modify_at, modifier
+    creater, modify_at, modifier, unit_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -32,11 +33,13 @@
     insert into tb_project (id, name, equipment_numnber, 
       city, longitude, latitude, 
       project_status, create_at, creater, 
-      modify_at, modifier)
+      modify_at, modifier, unit_id
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{equipmentNumnber,jdbcType=INTEGER}, 
       #{city,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
       #{projectStatus,jdbcType=INTEGER}, #{createAt,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
-      #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR})
+      #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{unitId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.sys.supervision.entity.db.Project" >
     insert into tb_project
@@ -74,6 +77,9 @@
       <if test="modifier != null" >
         modifier,
       </if>
+      <if test="unitId != null" >
+        unit_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -108,6 +114,9 @@
       </if>
       <if test="modifier != null" >
         #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -144,6 +153,9 @@
       <if test="modifier != null" >
         modifier = #{modifier,jdbcType=VARCHAR},
       </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -158,14 +170,29 @@
       create_at = #{createAt,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       modify_at = #{modifyAt,jdbcType=TIMESTAMP},
-      modifier = #{modifier,jdbcType=VARCHAR}
+      modifier = #{modifier,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateNumberByProjectCode">
+    update tb_project
+    set equipment_numnber = #{count}
+    where unit_id = #{projectId}
+  </update>
+
 
   <select id="getAll" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from tb_project
     where 1=1
   </select>
+
+  <select id="countByUnitId" resultType="java.lang.Integer">
+    select count(1)
+    from tb_project tp
+    where tp.unit_id = #{unitId}
+  </select>
+
 
 </mapper>

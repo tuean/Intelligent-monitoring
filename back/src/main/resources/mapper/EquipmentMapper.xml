@@ -1,243 +1,259 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sys.supervision.dao.EquipmentMapper" >
-  <resultMap id="BaseResultMap" type="com.sys.supervision.entity.db.Equipment" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="equipment_status" property="equipmentStatus" jdbcType="INTEGER" />
-    <result column="project_id" property="projectId" jdbcType="INTEGER" />
-    <result column="period" property="period" jdbcType="VARCHAR" />
-    <result column="parameter" property="parameter" jdbcType="VARCHAR" />
-    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
-    <result column="creater" property="creater" jdbcType="VARCHAR" />
-    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
-    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
-    <result column="dev_code" property="devCode" jdbcType="VARCHAR" />
-    <result column="dev_name" property="devName" jdbcType="VARCHAR" />
-    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
-    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, equipment_status, project_id, period, parameter, create_at, creater, modify_at, 
-    modifier, dev_code, dev_name, longitude, latitude
+<mapper namespace="com.sys.supervision.dao.EquipmentMapper">
+    <resultMap id="BaseResultMap" type="com.sys.supervision.entity.db.Equipment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="equipment_status" property="equipmentStatus" jdbcType="INTEGER"/>
+        <result column="dev_code" property="devCode" jdbcType="VARCHAR"/>
+        <result column="dev_name" property="devName" jdbcType="VARCHAR"/>
+        <result column="project_id" property="projectId" jdbcType="VARCHAR"/>
+        <result column="period" property="period" jdbcType="VARCHAR"/>
+        <result column="parameter" property="parameter" jdbcType="VARCHAR"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="create_at" property="createAt" jdbcType="TIMESTAMP"/>
+        <result column="creater" property="creater" jdbcType="VARCHAR"/>
+        <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP"/>
+        <result column="modifier" property="modifier" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, equipment_status, dev_code, dev_name, project_id, period, parameter, longitude, 
+    latitude, create_at, creater, modify_at, modifier
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_equipment
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_equipment
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_equipment
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.sys.supervision.entity.db.Equipment" >
-    insert into tb_equipment (id, equipment_status, project_id, 
-      period, parameter, create_at, 
-      creater, modify_at, modifier, 
-      dev_code, dev_name, longitude, 
-      latitude)
-    values (#{id,jdbcType=INTEGER}, #{equipmentStatus,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, 
-      #{period,jdbcType=VARCHAR}, #{parameter,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, 
-      #{creater,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
-      #{devCode,jdbcType=VARCHAR}, #{devName,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
-      #{latitude,jdbcType=VARCHAR})
+    <insert id="insert" parameterType="com.sys.supervision.entity.db.Equipment">
+    insert into tb_equipment (id, equipment_status, dev_code, 
+      dev_name, project_id, period, 
+      parameter, longitude, latitude, 
+      create_at, creater, modify_at, 
+      modifier)
+    values (#{id,jdbcType=INTEGER}, #{equipmentStatus,jdbcType=INTEGER}, #{devCode,jdbcType=VARCHAR}, 
+      #{devName,jdbcType=VARCHAR}, #{projectId,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR}, 
+      #{parameter,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.sys.supervision.entity.db.Equipment" >
-    insert into tb_equipment
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="equipmentStatus != null" >
-        equipment_status,
-      </if>
-      <if test="projectId != null" >
-        project_id,
-      </if>
-      <if test="period != null" >
-        period,
-      </if>
-      <if test="parameter != null" >
-        parameter,
-      </if>
-      <if test="createAt != null" >
-        create_at,
-      </if>
-      <if test="creater != null" >
-        creater,
-      </if>
-      <if test="modifyAt != null" >
-        modify_at,
-      </if>
-      <if test="modifier != null" >
-        modifier,
-      </if>
-      <if test="devCode != null" >
-        dev_code,
-      </if>
-      <if test="devName != null" >
-        dev_name,
-      </if>
-      <if test="longitude != null" >
-        longitude,
-      </if>
-      <if test="latitude != null" >
-        latitude,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="equipmentStatus != null" >
-        #{equipmentStatus,jdbcType=INTEGER},
-      </if>
-      <if test="projectId != null" >
-        #{projectId,jdbcType=INTEGER},
-      </if>
-      <if test="period != null" >
-        #{period,jdbcType=VARCHAR},
-      </if>
-      <if test="parameter != null" >
-        #{parameter,jdbcType=VARCHAR},
-      </if>
-      <if test="createAt != null" >
-        #{createAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creater != null" >
-        #{creater,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyAt != null" >
-        #{modifyAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifier != null" >
-        #{modifier,jdbcType=VARCHAR},
-      </if>
-      <if test="devCode != null" >
-        #{devCode,jdbcType=VARCHAR},
-      </if>
-      <if test="devName != null" >
-        #{devName,jdbcType=VARCHAR},
-      </if>
-      <if test="longitude != null" >
-        #{longitude,jdbcType=VARCHAR},
-      </if>
-      <if test="latitude != null" >
-        #{latitude,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.sys.supervision.entity.db.Equipment" >
-    update tb_equipment
-    <set >
-      <if test="equipmentStatus != null" >
-        equipment_status = #{equipmentStatus,jdbcType=INTEGER},
-      </if>
-      <if test="projectId != null" >
-        project_id = #{projectId,jdbcType=INTEGER},
-      </if>
-      <if test="period != null" >
-        period = #{period,jdbcType=VARCHAR},
-      </if>
-      <if test="parameter != null" >
-        parameter = #{parameter,jdbcType=VARCHAR},
-      </if>
-      <if test="createAt != null" >
-        create_at = #{createAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creater != null" >
-        creater = #{creater,jdbcType=VARCHAR},
-      </if>
-      <if test="modifyAt != null" >
-        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifier != null" >
-        modifier = #{modifier,jdbcType=VARCHAR},
-      </if>
-      <if test="devCode != null" >
-        dev_code = #{devCode,jdbcType=VARCHAR},
-      </if>
-      <if test="devName != null" >
-        dev_name = #{devName,jdbcType=VARCHAR},
-      </if>
-      <if test="longitude != null" >
-        longitude = #{longitude,jdbcType=VARCHAR},
-      </if>
-      <if test="latitude != null" >
-        latitude = #{latitude,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.sys.supervision.entity.db.Equipment" >
+    <insert id="insertSelective" parameterType="com.sys.supervision.entity.db.Equipment">
+        insert into tb_equipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="equipmentStatus != null">
+                equipment_status,
+            </if>
+            <if test="devCode != null">
+                dev_code,
+            </if>
+            <if test="devName != null">
+                dev_name,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+            <if test="period != null">
+                period,
+            </if>
+            <if test="parameter != null">
+                parameter,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="creater != null">
+                creater,
+            </if>
+            <if test="modifyAt != null">
+                modify_at,
+            </if>
+            <if test="modifier != null">
+                modifier,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="equipmentStatus != null">
+                #{equipmentStatus,jdbcType=INTEGER},
+            </if>
+            <if test="devCode != null">
+                #{devCode,jdbcType=VARCHAR},
+            </if>
+            <if test="devName != null">
+                #{devName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="period != null">
+                #{period,jdbcType=VARCHAR},
+            </if>
+            <if test="parameter != null">
+                #{parameter,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null">
+                #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyAt != null">
+                #{modifyAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.sys.supervision.entity.db.Equipment">
+        update tb_equipment
+        <set>
+            <if test="equipmentStatus != null">
+                equipment_status = #{equipmentStatus,jdbcType=INTEGER},
+            </if>
+            <if test="devCode != null">
+                dev_code = #{devCode,jdbcType=VARCHAR},
+            </if>
+            <if test="devName != null">
+                dev_name = #{devName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=VARCHAR},
+            </if>
+            <if test="period != null">
+                period = #{period,jdbcType=VARCHAR},
+            </if>
+            <if test="parameter != null">
+                parameter = #{parameter,jdbcType=VARCHAR},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creater != null">
+                creater = #{creater,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyAt != null">
+                modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                modifier = #{modifier,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.sys.supervision.entity.db.Equipment">
     update tb_equipment
     set equipment_status = #{equipmentStatus,jdbcType=INTEGER},
-      project_id = #{projectId,jdbcType=INTEGER},
+      dev_code = #{devCode,jdbcType=VARCHAR},
+      dev_name = #{devName,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=VARCHAR},
       period = #{period,jdbcType=VARCHAR},
       parameter = #{parameter,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
       create_at = #{createAt,jdbcType=TIMESTAMP},
       creater = #{creater,jdbcType=VARCHAR},
       modify_at = #{modifyAt,jdbcType=TIMESTAMP},
-      modifier = #{modifier,jdbcType=VARCHAR},
-      dev_code = #{devCode,jdbcType=VARCHAR},
-      dev_name = #{devName,jdbcType=VARCHAR},
-      longitude = #{longitude,jdbcType=VARCHAR},
-      latitude = #{latitude,jdbcType=VARCHAR}
+      modifier = #{modifier,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getAll" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
-    from tb_equipment
-    where 1=1
-  </select>
 
-  <select id="count" resultType="java.lang.Integer">
-    select count(*)
-    from tb_equipment te
-    left join tb_project tp
-    on te.project_id = tp.id
-    where 1=1
-    <include refid="list_where" />
-  </select>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_equipment
+        where 1=1
+    </select>
 
-  <select id="query" resultType="com.sys.supervision.model.response.EquipmentListResponse">
-    select
-    te.id as id,
-    tp.name as name,
-    tp.longitude as longitude,
-    tp.latitude as latitude,
-    te.equipment_status as equipmentStatus,
-    te.period as period,
-    te.parameter as parameter,
-    te.create_at as createAt
-    from tb_equipment te
-    left join tb_project tp
-    on te.project_id = tp.id
-    where 1=1
-    <include refid="list_where" />
-    limit #{startRow}, #{endRow}
-  </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)
+        from tb_equipment te
+        left join tb_project tp
+        on te.project_id = tp.id
+        where 1=1
+        <include refid="list_where"/>
+    </select>
 
-  <resultMap id="group_by_project" type="com.sys.supervision.model.enhance.EquipGroupByProject" extends="BaseResultMap">
-    <result column="name" property="projectName" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-  </resultMap>
+    <select id="query" resultType="com.sys.supervision.model.response.EquipmentListResponse">
+        select
+        te.id as id,
+        tp.name as name,
+        tp.longitude as longitude,
+        tp.latitude as latitude,
+        te.equipment_status as equipmentStatus,
+        te.period as period,
+        te.parameter as parameter,
+        te.create_at as createAt
+        from tb_equipment te
+        left join tb_project tp
+        on te.project_id = tp.id
+        where 1=1
+        <include refid="list_where"/>
+        limit #{startRow}, #{endRow}
+    </select>
 
-  <select id="getAllGroupByProject" resultMap="group_by_project">
+    <resultMap id="group_by_project" type="com.sys.supervision.model.enhance.EquipGroupByProject"
+               extends="BaseResultMap">
+        <result column="name" property="projectName" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getAllGroupByProject" resultMap="group_by_project">
     select te.*, tp.name, tp.city
     from tb_equipment te
     left join tb_project tp
-    on te.project_id = tp.id
+    on te.project_id = tp.unit_id
     where 1=1
   </select>
 
-  <sql id="list_where">
-    <if test="name != null and name != ''">
-      and tp.name like concat('%', concat(#{name}, '%'))
-    </if>
-  </sql>
+    <sql id="list_where">
+        <if test="name != null and name != ''">
+            and tp.name like concat('%', concat(#{name}, '%'))
+        </if>
+    </sql>
 
+
+    <select id="countByDevCode" resultType="java.lang.Integer">
+        select count(1)
+        from tb_equipment te
+        where te.dev_code = #{devCode}
+    </select>
+
+
+    <select id="countByGroup" resultType="com.alibaba.fastjson.JSONObject">
+        select te.project_id as project_id, count(te.project_id) as count
+        from tb_equipment te
+        group by te.project_id
+    </select>
 
 
 </mapper>

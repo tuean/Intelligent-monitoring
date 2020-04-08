@@ -25,6 +25,8 @@ public class Project {
 
     private String modifier;
 
+    private String unitId;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class Project {
 
     public void setModifier(String modifier) {
         this.modifier = modifier == null ? null : modifier.trim();
+    }
+
+    public String getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(String unitId) {
+        this.unitId = unitId == null ? null : unitId.trim();
     }
 }

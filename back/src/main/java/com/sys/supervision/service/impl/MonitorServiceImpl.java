@@ -56,13 +56,14 @@ public class MonitorServiceImpl implements IMonitorService {
             }
 
             // 根据城市统计设备数量信息
-            equipMap.put(p.getCity(), equipMap.getOrDefault(p.getCity(), 0) + p.getEquipmentNumnber());
+            p.setCity(p.getCity() == null ? "未知" : p.getCity());
+            equipMap.put(p.getCity(), equipMap.getOrDefault(p.getCity(), 1) + p.getEquipmentNumnber());
 
             // 添加所有项目的地址
             locationList.add(Location.builder()
                     .latitude(p.getLatitude())
                     .longitude(p.getLongitude())
-                    .name(p.getName())
+                    .name(p.getName() == null ? "未知" : p.getName())
                     .status(p.getProjectStatus())
                     .build());
         }

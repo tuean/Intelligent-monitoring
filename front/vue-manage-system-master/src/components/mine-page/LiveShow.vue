@@ -14,7 +14,7 @@
                 <el-cascader v-model="value" :options="options" @change="handleChange"></el-cascader>
 
                 <div class="photo-container">
-                    <Flv></Flv>
+                    <Flv :src="src"></Flv>
                 </div>
             </div>
         </div>
@@ -32,8 +32,9 @@ export default {
             props: {},
             value: null,
             options: [],
-            src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
-            srcMap: []
+            // src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+            srcMap: [],
+            src: '',
         };
     },
     components: {
@@ -58,9 +59,12 @@ export default {
             if (value.length < 3) {
                 this.$message.warning('系统异常');
             }
-            let data = {
-                id: value[2]
-            };
+            
+            let _this = this
+            get('/url/flv?id=' + value[2]).then(res => {
+                console.log(res)
+                _this.src = res.body
+            })
 
         }
     }

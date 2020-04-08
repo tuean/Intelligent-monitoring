@@ -62,14 +62,22 @@ create table `tb_project` (
   primary key(`id`)
 )Engine=InnoDB comment '项目表';
 
+alter table `tb_project` add column `unit_id` varchar(64) null comment '项目id'; 
+
+
 
 -- 设备表
 create table `tb_equipment` (
   `id` int(10) unsigned not null auto_increment comment 'id',
   `equipment_status` int(6) not null comment '设备状态',
-  `project_id` int(10) null comment '所属监测项目id',
+  `dev_code` varchar(64) not null comment 'dev_code',
+  `dev_name` varchar(64) null comment 'dev_name',
+  `project_id` varchar(64) null comment '所属监测项目id',
   `period` varchar(64) null comment '抓拍间隔',
   `parameter` varchar(1024) null comment '设备参数',
+  `longitude` varchar(64) null comment '经度',
+  `latitude` varchar(64) null comment '纬度',
+
 
 
   `create_at` datetime not null comment '创建时间',

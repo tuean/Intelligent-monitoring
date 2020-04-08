@@ -3,13 +3,15 @@ package com.sys.supervision.enums;
 /**
  * 产品说明书上没有说明
  *
- * 先随意定义
+ * 选取Status3G值
+ *
+ * int  设备3G状态,1-在线，0-离线
  */
 public enum EquipmentStatusEnum {
 
-    OK          (0,         "正常"),
+    OK          (1,         "正常"),
 
-    EXCEPTION   (1,         "异常")
+    EXCEPTION   (0,         "离线")
 
     ;
 

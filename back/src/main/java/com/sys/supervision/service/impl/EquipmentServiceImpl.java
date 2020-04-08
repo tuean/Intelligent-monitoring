@@ -100,7 +100,7 @@ public class EquipmentServiceImpl implements IEquipmentService {
         if (source == null) return new ArrayList<>();
         List<EquipGroupByProject> list = new ArrayList<>();
         for (EquipGroupByProject e : source) {
-            if (e.getCity().equals(city)) {
+            if (e.getCity() != null && e.getCity().equals(city)) {
                 list.add(e);
             }
         }
