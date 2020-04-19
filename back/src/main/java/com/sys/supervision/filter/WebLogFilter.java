@@ -29,6 +29,9 @@ import java.util.Map;
 import static com.sys.supervision.utils.HttpUtil.getResponseBody;
 
 
+/**
+ * 日志记录拦截器
+ */
 @Component
 @Slf4j
 @Order(2)
@@ -59,6 +62,7 @@ public class WebLogFilter implements Filter {
 
 
 
+        // 是否需要记录请求结果 根据请求url判断
         boolean toLogResponse = true;
         String url = null;
         AntPathMatcher apm = new AntPathMatcher();
@@ -81,6 +85,7 @@ public class WebLogFilter implements Filter {
         }
 
 
+        // 请求、结果对象重新封装
         SpringResponseWrapper response = null;
         final SpringRequestWrapper requestWrapper = new SpringRequestWrapper(httpServletRequest);
         String params = HttpUtil.getBodyString(requestWrapper);

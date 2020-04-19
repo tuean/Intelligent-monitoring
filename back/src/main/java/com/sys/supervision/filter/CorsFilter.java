@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 跨域拦截器
+ *
+ * 浏览器发送跨域请求前会发送一个options请求进行预检，后端直接通过该请求，直接返回200，并附上对应的请求头
+ */
 @Component
 @Slf4j
 @Order(1)

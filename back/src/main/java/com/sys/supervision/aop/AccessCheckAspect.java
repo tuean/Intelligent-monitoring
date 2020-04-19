@@ -50,6 +50,7 @@ public class AccessCheckAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
+        // 获取请求头中携带的token
         String token = request.getHeader(Constant.TOKEN_HEADER);
 
 
@@ -57,6 +58,7 @@ public class AccessCheckAspect {
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
 
+        // 判断请求的方式是否需要鉴权
         boolean needAccess = true;
         NoAccess noAccess = method.getAnnotation(NoAccess.class);
         AuthLevel authLevel = method.getAnnotation(AuthLevel.class);
@@ -66,6 +68,7 @@ public class AccessCheckAspect {
 
         if (StringUtils.isBlank(token) && needAccess) return BaseListResponse.error(AccessWrongMessage);
 
+        // 进行鉴权判断
         if (needAccess) {
             Account account = TokenCacheHelper.valid(token);
             if (account == null) account = accountMapper.selectByToken(token);
@@ -73,10 +76,12 @@ public class AccessCheckAspect {
             if (!AccountStatus.Normal.getCode().equals(account.getStatus())) {
                 return BaseListResponse.error(AccountExceptionMessage);
             }
+            // 人物权限是否满足设定
             if (authLevel != null) {
                 if (!RoleEnum.check(account.getRole())) return BaseListResponse.error(AuthErrorMessage);
                 if (RoleEnum.check(account.getRole(), authLevel.value())) return BaseListResponse.error(AuthErrorMessage);
             }
+            // 全部通过后放到ThreadLocal中 供当前线程 即当前请求中获取请求人信息
             AccountHelper.put(account);
         }
 
