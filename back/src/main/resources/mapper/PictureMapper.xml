@@ -3,7 +3,8 @@
 <mapper namespace="com.sys.supervision.dao.PictureMapper" >
   <resultMap id="BaseResultMap" type="com.sys.supervision.entity.db.Picture" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="camera_id" property="cameraId" jdbcType="INTEGER" />
+    <result column="camera_id" property="cameraId" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
     <result column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="pic_time" property="picTime" jdbcType="TIMESTAMP" />
@@ -14,13 +15,21 @@
     <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
     <result column="modifier" property="modifier" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.sys.supervision.entity.db.Picture" extends="BaseResultMap" >
+    <result column="base64" property="base64" jdbcType="LONGVARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
-    id, camera_id, project_id, path, pic_time, pic_status, size, create_at, creater, 
-    modify_at, modifier
+    id, camera_id, task_id, project_id, path, pic_time, pic_status, size, create_at, 
+    creater, modify_at, modifier
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <sql id="Blob_Column_List" >
+    base64
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from tb_pic
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -29,14 +38,16 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.sys.supervision.entity.db.Picture" >
-    insert into tb_pic (id, camera_id, project_id, 
-      path, pic_time, pic_status, 
-      size, create_at, creater, 
-      modify_at, modifier)
-    values (#{id,jdbcType=INTEGER}, #{cameraId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, 
-      #{path,jdbcType=VARCHAR}, #{picTime,jdbcType=TIMESTAMP}, #{picStatus,jdbcType=INTEGER}, 
-      #{size,jdbcType=BIGINT}, #{createAt,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
-      #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR})
+    insert into tb_pic (id, camera_id, task_id, 
+      project_id, path, pic_time, 
+      pic_status, size, create_at, 
+      creater, modify_at, modifier, 
+      base64)
+    values (#{id,jdbcType=INTEGER}, #{cameraId,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, 
+      #{projectId,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{picTime,jdbcType=TIMESTAMP}, 
+      #{picStatus,jdbcType=INTEGER}, #{size,jdbcType=BIGINT}, #{createAt,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{base64,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.sys.supervision.entity.db.Picture" >
     insert into tb_pic
@@ -46,6 +57,9 @@
       </if>
       <if test="cameraId != null" >
         camera_id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
       </if>
       <if test="projectId != null" >
         project_id,
@@ -74,13 +88,19 @@
       <if test="modifier != null" >
         modifier,
       </if>
+      <if test="base64 != null" >
+        base64,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
       <if test="cameraId != null" >
-        #{cameraId,jdbcType=INTEGER},
+        #{cameraId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="projectId != null" >
         #{projectId,jdbcType=INTEGER},
@@ -109,13 +129,19 @@
       <if test="modifier != null" >
         #{modifier,jdbcType=VARCHAR},
       </if>
+      <if test="base64 != null" >
+        #{base64,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.sys.supervision.entity.db.Picture" >
     update tb_pic
     <set >
       <if test="cameraId != null" >
-        camera_id = #{cameraId,jdbcType=INTEGER},
+        camera_id = #{cameraId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
       </if>
       <if test="projectId != null" >
         project_id = #{projectId,jdbcType=INTEGER},
@@ -144,12 +170,32 @@
       <if test="modifier != null" >
         modifier = #{modifier,jdbcType=VARCHAR},
       </if>
+      <if test="base64 != null" >
+        base64 = #{base64,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.sys.supervision.entity.db.Picture" >
+    update tb_pic
+    set camera_id = #{cameraId,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      project_id = #{projectId,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      pic_time = #{picTime,jdbcType=TIMESTAMP},
+      pic_status = #{picStatus,jdbcType=INTEGER},
+      size = #{size,jdbcType=BIGINT},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      base64 = #{base64,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.sys.supervision.entity.db.Picture" >
     update tb_pic
-    set camera_id = #{cameraId,jdbcType=INTEGER},
+    set camera_id = #{cameraId,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
       project_id = #{projectId,jdbcType=INTEGER},
       path = #{path,jdbcType=VARCHAR},
       pic_time = #{picTime,jdbcType=TIMESTAMP},
@@ -162,10 +208,11 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByEquipId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
+
+  <select id="selectByEquipId" resultMap="ResultMapWithBLOBs">
+    select *
     from tb_pic
-    where camera_id = #{equipId}
+    where camera_id = #{id}
   </select>
 
 </mapper>

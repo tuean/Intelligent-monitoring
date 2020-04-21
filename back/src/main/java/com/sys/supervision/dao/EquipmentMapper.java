@@ -33,4 +33,7 @@ public interface EquipmentMapper {
     int countByDevCode(@Param("devCode") String devCode);
 
     List<JSONObject> countByGroup();
+
+    void updateStatusByDevCode(@Param("devCode") String devCode,
+                               @Param("status") Integer status);
 }

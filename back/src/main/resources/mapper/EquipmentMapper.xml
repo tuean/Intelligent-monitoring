@@ -186,6 +186,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+    <update id="updateStatusByDevCode">
+        update tb_equipment
+        set
+          equipment_status = #{status},
+          modify_at = now()
+        where dev_code = #{devCode}
+    </update>
+
 
     <select id="getAll" resultMap="BaseResultMap">
         select

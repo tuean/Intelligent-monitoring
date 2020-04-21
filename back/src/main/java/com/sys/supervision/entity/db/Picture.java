@@ -1,13 +1,13 @@
 package com.sys.supervision.entity.db;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.Date;
 
 public class Picture {
     private Integer id;
 
-    private Integer cameraId;
+    private String cameraId;
+
+    private String taskId;
 
     private Integer projectId;
 
@@ -19,15 +19,15 @@ public class Picture {
 
     private Long size;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createAt;
 
     private String creater;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date modifyAt;
 
     private String modifier;
+
+    private String base64;
 
     public Integer getId() {
         return id;
@@ -37,12 +37,20 @@ public class Picture {
         this.id = id;
     }
 
-    public Integer getCameraId() {
+    public String getCameraId() {
         return cameraId;
     }
 
-    public void setCameraId(Integer cameraId) {
-        this.cameraId = cameraId;
+    public void setCameraId(String cameraId) {
+        this.cameraId = cameraId == null ? null : cameraId.trim();
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId == null ? null : taskId.trim();
     }
 
     public Integer getProjectId() {
@@ -115,5 +123,13 @@ public class Picture {
 
     public void setModifier(String modifier) {
         this.modifier = modifier == null ? null : modifier.trim();
+    }
+
+    public String getBase64() {
+        return base64;
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64 == null ? null : base64.trim();
     }
 }

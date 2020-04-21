@@ -15,7 +15,9 @@ public interface PictureMapper {
 
     int updateByPrimaryKeySelective(Picture record);
 
+    int updateByPrimaryKeyWithBLOBs(Picture record);
+
     int updateByPrimaryKey(Picture record);
 
-    List<Picture> selectByEquipId(Integer equipId);
+    List<Picture> selectByEquipId(Integer id);
 }

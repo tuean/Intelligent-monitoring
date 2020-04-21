@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sys.supervision.config.Constant;
 import com.sys.supervision.dao.EquipmentMapper;
 import com.sys.supervision.entity.db.Equipment;
+import com.sys.supervision.enums.EquipmentStatusEnum;
 import com.sys.supervision.model.BaseListResponse;
 import com.sys.supervision.model.BaseResponse;
 import com.sys.supervision.model.enhance.EquipGroupByProject;
@@ -26,6 +27,19 @@ public class EquipmentServiceImpl implements IEquipmentService {
 
     @Autowired
     private EquipmentMapper equipmentMapper;
+
+    @Override
+    public String create(String id) {
+        Equipment equipment = new Equipment();
+        equipment.setEquipmentStatus(EquipmentStatusEnum.OK.getCode());
+        equipment.setDevCode(id);
+        equipment.setCreateAt(new Date());
+        equipment.setModifyAt(new Date());
+        equipment.setCreater("sys");
+        equipment.setModifier("sys");
+        equipmentMapper.insert(equipment);
+        return null;
+    }
 
     @Override
     public BaseListResponse<EquipmentListResponse> getList(EquipmentListRequest request) {
@@ -94,6 +108,11 @@ public class EquipmentServiceImpl implements IEquipmentService {
         }
 
         return new BaseResponse().okWithBody(result);
+    }
+
+    @Override
+    public void updateStatus(String id, EquipmentStatusEnum equipmentStatusEnum) {
+        equipmentMapper.updateStatusByDevCode(id, equipmentStatusEnum.getCode());
     }
 
     public List<EquipGroupByProject> getByCity(String city, List<EquipGroupByProject> source) {
