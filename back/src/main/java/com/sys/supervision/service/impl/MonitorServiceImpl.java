@@ -8,6 +8,7 @@ import com.sys.supervision.enums.ProjectStatusEnum;
 import com.sys.supervision.model.Location;
 import com.sys.supervision.model.enhance.EquipmentEnhance;
 import com.sys.supervision.service.IMonitorService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,23 @@ public class MonitorServiceImpl implements IMonitorService {
         List<Equipment> equipmentList = equipmentMapper.getAll();
         List<Project> projectList = projectMapper.getAll();
         if (equipmentList == null) return new HashMap<>(0);
+        List<Location> locationList = new ArrayList<>();
+
+        for (Equipment e : equipmentList) {
+//            if (locationList.size() > 0) continue;
+            if (StringUtils.isBlank(e.getLatitude()) || StringUtils.isBlank(e.getLongitude())) continue;
+            // 添加所有项目的地址
+            locationList.add(Location.builder()
+                    .latitude(e.getLatitude())
+                    .longitude(e.getLongitude())
+                    .name(e.getDevName() == null ? "未知" : e.getDevName())
+                    .status(e.getEquipmentStatus())
+                    .build());
+        }
 
 //        List<EquipmentEnhance> enhances = new ArrayList<>(equipmentList.size());
         Map<String, Integer> equipMap = new HashMap<>(16);
         Map<String, Integer> warningMap = new HashMap<>(16);
-        List<Location> locationList = new ArrayList<>();
         Integer onlineNumber = 0;
         Integer offlineNumber = 0;
         Integer warning = 0;
@@ -58,14 +71,6 @@ public class MonitorServiceImpl implements IMonitorService {
             // 根据城市统计设备数量信息
             p.setCity(p.getCity() == null ? "未知" : p.getCity());
             equipMap.put(p.getCity(), equipMap.getOrDefault(p.getCity(), 1) + p.getEquipmentNumnber());
-
-            // 添加所有项目的地址
-            locationList.add(Location.builder()
-                    .latitude(p.getLatitude())
-                    .longitude(p.getLongitude())
-                    .name(p.getName() == null ? "未知" : p.getName())
-                    .status(p.getProjectStatus())
-                    .build());
         }
 
         Map<String, Integer> countMap = new HashMap<>(3);

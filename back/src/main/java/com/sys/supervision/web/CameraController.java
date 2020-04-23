@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @Slf4j
@@ -30,6 +28,8 @@ public class CameraController {
 
     @Autowired
     private IPicService picService;
+
+    public static Map<String, Integer> picMap = new HashMap<>();
 
     @NoAccess
     @RequestMapping(value = "/hw/online", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -44,16 +44,21 @@ public class CameraController {
     @RequestMapping(value = "/hw/heart_beat", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HeartBeatResponse heartBeat(@RequestBody OnlineRequest request) {
         equipmentService.updateStatus(request.getCamera_id(), EquipmentStatusEnum.OK);
+        Integer x = picMap.get(request.getCamera_id());
+        boolean flag =  x> 0;
+        picMap.put(request.getCamera_id(), x > 0 ? 0 : --x);
         HeartBeatResponse response = new HeartBeatResponse();
-        response.setShot("True");
-        String fakeShotId = UUID.randomUUID().toString();
-        log.info("fake shotid is {}", fakeShotId);
-        response.setShot_id(fakeShotId);
+        if (flag) {
+            response.setShot("True");
+            String fakeShotId = UUID.randomUUID().toString();
+            log.info("fake shotid is {}", fakeShotId);
+            response.setShot_id(fakeShotId);
+        }
         ScheduledTask task = new ScheduledTask();
         String fakeTaskId = UUID.randomUUID().toString();
         log.info("fake taskId is {}", fakeTaskId);
         task.setTask_id(fakeTaskId);
-        task.setOn("1.h");
+        task.setEvery("1.h");
         List<ScheduledTask> taskList = new ArrayList<>();
         taskList.add(task);
         response.setScheduled_task(taskList);

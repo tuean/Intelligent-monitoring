@@ -82,6 +82,8 @@ public class EquipmentServiceImpl implements IEquipmentService {
         for (EquipGroupByProject e : list) {
             String city = e.getCity();
             citySet.add(city);
+            if (e.getCity() == null) e.setCity("未知");
+            if (e.getProjectName() == null) e.setProjectName("未知");
         }
 
         for (String city : citySet) {
@@ -138,9 +140,10 @@ public class EquipmentServiceImpl implements IEquipmentService {
         if (list == null || list.size() < 1) return new ArrayList<>();
         List<EquipGroupByProject> result = new ArrayList<>();
         for (EquipGroupByProject e : list) {
-            e.setLabel(e.getId().toString());
-            e.setValue(e.getId().toString());
+            e.setLabel(e.getDevCode());
+            e.setValue(e.getDevCode());
 
+            if (e.getCity() == null || e.getProjectName() == null) continue;
             if (e.getCity().equals(city) && e.getProjectName().equals(project)) {
                 result.add(e);
             }

@@ -111,7 +111,7 @@ public class RpcService {
 
         List<JSONObject> groupMap = equipmentMapper.countByGroup();
         for (JSONObject map : groupMap) {
-            Integer projectId = Integer.valueOf((String) map.get("project_id"));
+            Integer projectId = map.get("project_id") == null ? 0 : Integer.valueOf((String) map.get("project_id"));
             Integer count = Long.valueOf(String.valueOf(map.get("count"))).intValue();
             projectMapper.updateNumberByProjectCode(projectId, count);
         }
