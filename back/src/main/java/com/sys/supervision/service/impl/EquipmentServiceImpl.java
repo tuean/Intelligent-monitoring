@@ -80,10 +80,10 @@ public class EquipmentServiceImpl implements IEquipmentService {
 
         Set<String> citySet = new HashSet<>();
         for (EquipGroupByProject e : list) {
-            String city = e.getCity();
-            citySet.add(city);
             if (e.getCity() == null) e.setCity("未知");
             if (e.getProjectName() == null) e.setProjectName("未知");
+            String city = e.getCity();
+            citySet.add(city);
         }
 
         for (String city : citySet) {
@@ -142,13 +142,26 @@ public class EquipmentServiceImpl implements IEquipmentService {
         for (EquipGroupByProject e : list) {
             e.setLabel(e.getDevCode());
             e.setValue(e.getDevCode());
+            if (e.getLabel() == null) continue;
+
 
             if (e.getCity() == null || e.getProjectName() == null) continue;
             if (e.getCity().equals(city) && e.getProjectName().equals(project)) {
+                if (contains(result, e.getDevCode())) continue;
                 result.add(e);
             }
         }
         return result;
+    }
+
+    private static boolean contains(List<EquipGroupByProject> result, String devCode) {
+        if (result.isEmpty()) return false;
+        for (EquipGroupByProject e: result) {
+            if (e.getLabel().equals(devCode)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

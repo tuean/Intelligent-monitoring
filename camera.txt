@@ -1,0 +1,41 @@
+
+
+//设备通电时
+POST /hw/online 
+JSON => {
+    camera_id: uuid str //uuid 标识设备
+}
+
+
+
+//固定间隔时间心跳 心跳发生则表示设备在线 
+POST /hw/heart_beat
+JSON => {
+    camera_id: uuid str
+}
+
+
+JSON <= {
+    shot: True/False, //Bool 类型 命令摄像头 立即拍摄一张照片
+    shot_id: uuid str, //当shot 为True 时 拍摄相片, 通过/hw/upload 返回, 用shot_id 的值填充task_id
+    scheduled_task: [ //注意这个变量为obj 类型的列表 用来设定任务
+        {
+            task_id: uuid str // 任务id 摄像头回报图像时会带着这个uuid 服务器以此区分每个任务返回的图像 !
+            every: 数字.类型 str //类型可以是 smh s秒 m分钟 h小时
+            on: 时:分:秒 //在某一时刻拍照 every 和on 只能选择一个 如果两个都存在 默认为every 
+        }
+    ],
+    cancel_task: [ //注意这个变量为str 类型的列表 用来取消任务
+        task_id: uuid
+    ]
+}
+
+
+
+// 拍照图片回报API
+POST /hw/upload
+JSON => {
+    camera_id: uuid str,
+    task_id: uuid str,
+    image: base64 str //base64 类型的str 图片类型为jpg
+}

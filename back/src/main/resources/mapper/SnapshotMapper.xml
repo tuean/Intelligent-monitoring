@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sys.supervision.dao.SnapshotMapper" >
+  <resultMap id="BaseResultMap" type="com.sys.supervision.entity.db.Snapshot" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dev_code" property="devCode" jdbcType="VARCHAR" />
+    <result column="shot_immediately" property="shotImmediately" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="every" property="every" jdbcType="VARCHAR" />
+    <result column="on" property="on" jdbcType="VARCHAR" />
+    <result column="create_at" property="createAt" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="modify_at" property="modifyAt" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dev_code, shot_immediately, task_id, every, on, create_at, creater, modify_at, 
+    modifier
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_snapshot
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_snapshot
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sys.supervision.entity.db.Snapshot" >
+    insert into tb_snapshot (id, dev_code, shot_immediately, 
+      task_id, every, on, 
+      create_at, creater, modify_at, 
+      modifier)
+    values (#{id,jdbcType=INTEGER}, #{devCode,jdbcType=VARCHAR}, #{shotImmediately,jdbcType=VARCHAR}, 
+      #{taskId,jdbcType=VARCHAR}, #{every,jdbcType=VARCHAR}, #{on,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{modifyAt,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sys.supervision.entity.db.Snapshot" >
+    insert into tb_snapshot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="devCode != null" >
+        dev_code,
+      </if>
+      <if test="shotImmediately != null" >
+        shot_immediately,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="every != null" >
+        every,
+      </if>
+      <if test="on != null" >
+        `on`,
+      </if>
+      <if test="createAt != null" >
+        create_at,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="modifyAt != null" >
+        modify_at,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="devCode != null" >
+        #{devCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shotImmediately != null" >
+        #{shotImmediately,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="every != null" >
+        #{every,jdbcType=VARCHAR},
+      </if>
+      <if test="on != null" >
+        #{on,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sys.supervision.entity.db.Snapshot" >
+    update tb_snapshot
+    <set >
+      <if test="devCode != null" >
+        dev_code = #{devCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shotImmediately != null" >
+        shot_immediately = #{shotImmediately,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="every != null" >
+        every = #{every,jdbcType=VARCHAR},
+      </if>
+      <if test="on != null" >
+        on = #{on,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null" >
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyAt != null" >
+        modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sys.supervision.entity.db.Snapshot" >
+    update tb_snapshot
+    set dev_code = #{devCode,jdbcType=VARCHAR},
+      shot_immediately = #{shotImmediately,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      every = #{every,jdbcType=VARCHAR},
+      on = #{on,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByDevCode" parameterType="com.sys.supervision.entity.db.Snapshot">
+    update tb_snapshot
+    set
+      shot_immediately = #{shotImmediately,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      every = #{every,jdbcType=VARCHAR},
+      on = #{on,jdbcType=VARCHAR},
+      modify_at = #{modifyAt,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where dev_code = #{devCode,jdbcType=VARCHAR},
+  </update>
+
+  <select id="countByDevCode" resultType="java.lang.Integer">
+    select count(1)
+    from tb_snapshot
+    where dev_code = #{devCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByDevCode" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from tb_snapshot
+    where dev_code = #{devCode,jdbcType=VARCHAR}
+    order by modify_at desc
+    limit 1
+  </select>
+
+  <delete id="deleteByDevCode">
+    delete from tb_snapshot
+    where dev_code = #{devCode}
+  </delete>
+
+
+</mapper>

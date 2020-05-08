@@ -1,6 +1,8 @@
 package com.sys.supervision.web;
 
 import com.sys.supervision.annotation.NoAccess;
+import com.sys.supervision.dao.SnapshotMapper;
+import com.sys.supervision.entity.db.Snapshot;
 import com.sys.supervision.enums.EquipmentStatusEnum;
 import com.sys.supervision.model.BaseResponse;
 import com.sys.supervision.model.request.OnlineRequest;
@@ -9,6 +11,7 @@ import com.sys.supervision.model.response.HeartBeatResponse;
 import com.sys.supervision.model.response.ScheduledTask;
 import com.sys.supervision.service.IEquipmentService;
 import com.sys.supervision.service.IPicService;
+import com.sys.supervision.service.IShotService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+/**
+ * 提供给摄像头使用
+ */
 @RestController
 @Slf4j
 public class CameraController {
@@ -28,6 +34,10 @@ public class CameraController {
 
     @Autowired
     private IPicService picService;
+
+    @Autowired
+    private IShotService shotService;
+
 
     public static Map<String, Integer> picMap = new HashMap<>();
 
@@ -44,25 +54,26 @@ public class CameraController {
     @RequestMapping(value = "/hw/heart_beat", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HeartBeatResponse heartBeat(@RequestBody OnlineRequest request) {
         equipmentService.updateStatus(request.getCamera_id(), EquipmentStatusEnum.OK);
-        Integer x = picMap.get(request.getCamera_id());
-        boolean flag =  x> 0;
-        picMap.put(request.getCamera_id(), x > 0 ? 0 : --x);
-        HeartBeatResponse response = new HeartBeatResponse();
-        if (flag) {
-            response.setShot("True");
-            String fakeShotId = UUID.randomUUID().toString();
-            log.info("fake shotid is {}", fakeShotId);
-            response.setShot_id(fakeShotId);
-        }
-        ScheduledTask task = new ScheduledTask();
-        String fakeTaskId = UUID.randomUUID().toString();
-        log.info("fake taskId is {}", fakeTaskId);
-        task.setTask_id(fakeTaskId);
-        task.setEvery("1.h");
-        List<ScheduledTask> taskList = new ArrayList<>();
-        taskList.add(task);
-        response.setScheduled_task(taskList);
-        return response;
+//        Integer x = picMap.get(request.getCamera_id());
+//        boolean flag =  x> 0;
+//        picMap.put(request.getCamera_id(), x > 0 ? 0 : --x);
+//        HeartBeatResponse response = new HeartBeatResponse();
+//        if (flag) {
+//            response.setShot("True");
+//            String fakeShotId = UUID.randomUUID().toString();
+//            log.info("fake shotid is {}", fakeShotId);
+//            response.setShot_id(fakeShotId);
+//        }
+//        ScheduledTask task = new ScheduledTask();
+//        String fakeTaskId = UUID.randomUUID().toString();
+//        log.info("fake taskId is {}", fakeTaskId);
+//        task.setTask_id(fakeTaskId);
+//        task.setEvery("1.h");
+//        List<ScheduledTask> taskList = new ArrayList<>();
+//        taskList.add(task);
+//        response.setScheduled_task(taskList);
+
+        return shotService.getByDevCode(request.getCamera_id());
     }
 
     @NoAccess

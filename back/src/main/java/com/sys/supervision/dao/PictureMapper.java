@@ -19,5 +19,5 @@ public interface PictureMapper {
 
     int updateByPrimaryKey(Picture record);
 
-    List<Picture> selectByEquipId(Integer id);
+    List<Picture> selectByDevCode(String id);
 }

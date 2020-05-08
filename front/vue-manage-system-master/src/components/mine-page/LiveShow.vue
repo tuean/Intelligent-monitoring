@@ -6,6 +6,10 @@
             </el-breadcrumb>
         </div>
         <div class="container">
+            <!-- <video id="test_video" controls autoplay src="rtsp://120.79.62.199:23506/zyrh/play?devid=612276@channel=1"></video> -->
+<!-- <video id="test_video" controls autoplay>
+    <source src="rtsp://120.79.62.199:23510/zyrh/play?devid=612276@channel=1">
+</video> -->
             <div class="handle-box">
                 <!-- <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10" @keyup.enter.native="handleSearch"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
@@ -23,7 +27,7 @@
 
 <script>
 import { post, get } from '../../utils/request';
-import Flv from '../common/flv'
+import Flv from '../common/flv';
 let id = 0;
 
 export default {
@@ -60,11 +64,13 @@ export default {
                 this.$message.warning('系统异常');
             }
             
-            let _this = this
-            get('/url/flv?id=' + value[2]).then(res => {
-                console.log(res)
-                _this.src = res.body
-            })
+            // let _this = this
+            // get('/url/flv?id=' + value[2]).then(res => {
+                // console.log(res)
+                // _this.src = res.body
+                // _this.src = "http://120.79.62.199:23505/live/video.ps?devid=612276&channel=1&devline=1"
+                // _this.src = "rtsp://120.79.62.199:23506/zyrh/play?devid=612276@channel=1"
+            // })
 
         }
     }

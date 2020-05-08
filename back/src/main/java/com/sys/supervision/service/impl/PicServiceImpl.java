@@ -24,7 +24,7 @@ public class PicServiceImpl implements IPicService {
     @Override
     public List<Picture> getList(PicListRequest request) {
 
-        List<Picture> pictures = pictureMapper.selectByEquipId(request.getId());
+        List<Picture> pictures = pictureMapper.selectByDevCode(request.getId());
 
         return pictures == null ? new ArrayList<>(0) : pictures;
     }

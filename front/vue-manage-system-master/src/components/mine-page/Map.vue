@@ -3,7 +3,7 @@
         <el-tab-pane label="项目监控" name="first">
             <el-row :gutter="20">
                 <el-col :span="16">
-                    <baidu-map name="baidu-map" class="bm-view" center="上海">
+                    <baidu-map name="baidu-map" class="bm-view" :center="{lng: 30.04472655, lat: 121.2063749}" :zoom="15">
                         <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
                         <bm-marker
                             v-for="(item, index) in locationList"

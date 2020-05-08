@@ -13,6 +13,6 @@ public class PicListRequest {
     /**
      * 设备id
      */
-    private Integer id;
+    private String id;
 
 }
